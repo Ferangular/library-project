@@ -31,7 +31,9 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.scss"]
+            "styles": [
+              "src/styles.scss"
+            ]
           },
           "configurations": {
             "production": {
@@ -85,23 +87,24 @@
           "standalone": true,
           "changeDetection": "OnPush"
         },
-      "architect": {
-        "build": {
-          "builder": "@angular/build:ng-packagr",
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/first-library/tsconfig.lib.prod.json"
+        "architect": {
+          "build": {
+            "builder": "@angular/build:ng-packagr",
+            "configurations": {
+              "production": {
+                "tsConfig": "projects/first-library/tsconfig.lib.prod.json"
+              },
+              "development": {
+                "tsConfig": "projects/first-library/tsconfig.lib.json"
+              }
             },
-            "development": {
-              "tsConfig": "projects/first-library/tsconfig.lib.json"
-            }
+            "defaultConfiguration": "production"
           },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular/build:unit-test",
-          "options": {
-            "tsConfig": "projects/first-library/tsconfig.spec.json"
+          "test": {
+            "builder": "@angular/build:unit-test",
+            "options": {
+              "tsConfig": "projects/first-library/tsconfig.spec.json"
+            }
           }
         }
       }
