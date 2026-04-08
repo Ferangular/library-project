@@ -11,10 +11,12 @@
     border-radius: 12px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(0);
 
     &:hover {
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      transform: translateY(-2px);
     }
   }
 
@@ -35,18 +37,33 @@
     line-height: 1.5;
     color: #374151;
     background: #ffffff;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     outline: none;
+    cursor: pointer;
+
+    // BEM Modifier: input--hover
+    &:hover {
+      border-color: #d1d5db;
+      background: #f9fafb;
+      transform: scale(1.01);
+    }
 
     // BEM Modifier: input--focus
     &:focus {
       border-color: #3b82f6;
       box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      background: #ffffff;
+      transform: scale(1.02);
     }
 
     // BEM Modifier: input--placeholder
     &::placeholder {
       color: #9ca3af;
+      transition: color 0.2s ease;
+    }
+
+    &:hover::placeholder {
+      color: #6b7280;
     }
   }
 
@@ -58,13 +75,27 @@
     transform: translateY(-50%);
     pointer-events: none;
     color: #6b7280;
-    transition: color 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   // BEM Element: search-icon
   &__search-icon {
     width: 20px;
     height: 20px;
+    transition: all 0.3s ease;
+  }
+
+  // Icon hover effect when input is hovered
+  &__input-wrapper:hover &__icon {
+    color: #3b82f6;
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  // Icon focus effect when input is focused
+  &__input:focus ~ &__icon {
+    color: #3b82f6;
+    transform: translateY(-50%) scale(1.2);
+    animation: pulse 2s infinite;
   }
 
   // BEM Element: results
@@ -82,6 +113,42 @@
     opacity: 0.6;
     pointer-events: none;
   }
+
+  // BEM Element: suggestions
+  &__suggestions {
+    margin-top: 0.5rem;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    animation: slideDown 0.3s ease-out;
+  }
+
+  // BEM Element: suggestion-item
+  &__suggestion-item {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid #f3f4f6;
+    color: #6b7280;
+    font-size: 0.875rem;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: #3b82f6;
+      color: #ffffff;
+      transform: translateX(4px);
+    }
+
+    &:active {
+      transform: translateX(2px);
+      background: #2563eb;
+    }
+  }
 }
 
 // Animation
@@ -93,6 +160,15 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
   }
 }
 

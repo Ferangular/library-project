@@ -11,6 +11,7 @@ import { Usuario } from '../usuario/usuario';
 export class BuscadorUsuario {
   busquedaControl = new FormControl('', { nonNullable: true });
   buscando = signal(false);
+  isHovering = signal(false);
 
   busquedaRealizada = output<string>();
 
@@ -21,6 +22,12 @@ export class BuscadorUsuario {
   mostrarResultados = computed(() => {
     const texto = this.textoBusqueda();
     return texto.trim().length > 0 && this.buscando();
+  });
+
+  // Computed signal para mostrar sugerencias cuando está vacío y en hover
+  mostrarSugerencias = computed(() => {
+    const texto = this.textoBusqueda();
+    return texto.trim().length === 0 && this.isHovering();
   });
 
   constructor() {
@@ -46,5 +53,19 @@ export class BuscadorUsuario {
     if (event.key === 'Enter') {
       this.realizarBusqueda();
     }
+  }
+
+  onInputHover() {
+    this.isHovering.set(true);
+  }
+
+  onInputLeave() {
+    this.isHovering.set(false);
+  }
+
+  // Método para simular tipeo
+  simularTipeo(ejemplo: string) {
+    this.busquedaControl.setValue(ejemplo);
+    this.realizarBusqueda();
   }
 }

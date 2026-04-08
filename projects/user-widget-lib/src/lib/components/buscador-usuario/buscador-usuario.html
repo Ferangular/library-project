@@ -5,6 +5,8 @@
         class="buscador-usuario__input"
         [formControl]="busquedaControl" 
         (keydown)="onBuscar($event)" 
+        (mouseenter)="onInputHover()"
+        (mouseleave)="onInputLeave()"
         placeholder="Buscar usuario..."
         type="text">
       <div class="buscador-usuario__icon">
@@ -13,6 +15,27 @@
         </svg>
       </div>
     </div>
+    
+    <!-- Sugerencias cuando el input está vacío y en hover -->
+    @if (mostrarSugerencias()) {
+      <div class="buscador-usuario__suggestions">
+        <div 
+          class="buscador-usuario__suggestion-item" 
+          (click)="simularTipeo('octocat')">
+          Ej: octocat
+        </div>
+        <div 
+          class="buscador-usuario__suggestion-item" 
+          (click)="simularTipeo('microsoft')">
+          Ej: microsoft
+        </div>
+        <div 
+          class="buscador-usuario__suggestion-item" 
+          (click)="simularTipeo('facebook')">
+          Ej: facebook
+        </div>
+      </div>
+    }
   </div>
 
   @if (mostrarResultados()) {
