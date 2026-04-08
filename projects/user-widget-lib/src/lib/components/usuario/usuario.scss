@@ -1,0 +1,351 @@
+// BEM Block: usuario-card
+.usuario-card {
+  max-width: 400px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15), 0 12px 16px -8px rgba(0, 0, 0, 0.1);
+  }
+
+  // BEM Element: header
+  &__header {
+    position: relative;
+    height: 120px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    overflow: hidden;
+  }
+
+  &__header-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    animation: float 6s ease-in-out infinite;
+  }
+
+  // BEM Element: main
+  &__main {
+    position: relative;
+    padding: 0 24px 24px;
+    margin-top: -60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  // BEM Element: avatar-link
+  &__avatar-link {
+    position: relative;
+    display: block;
+    margin-bottom: 16px;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  // BEM Element: avatar
+  &__avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+  }
+
+  // BEM Element: avatar-overlay
+  &__avatar-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &__avatar-link:hover &__avatar-overlay {
+    opacity: 1;
+  }
+
+  // BEM Element: github-icon
+  &__github-icon {
+    width: 40px;
+    height: 40px;
+    color: #ffffff;
+  }
+
+  // BEM Element: info
+  &__info {
+    text-align: center;
+    width: 100%;
+  }
+
+  // BEM Element: name
+  &__name {
+    margin: 0 0 8px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #3b82f6;
+      }
+    }
+  }
+
+  // BEM Element: real-name
+  &__real-name {
+    margin: 0 0 8px;
+    font-size: 1.125rem;
+    color: #6b7280;
+    font-weight: 500;
+  }
+
+  // BEM Element: bio
+  &__bio {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #4b5563;
+    line-height: 1.5;
+    max-width: 300px;
+  }
+
+  // BEM Element: stats
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: #e5e7eb;
+    margin: 24px -24px 0;
+  }
+
+  // BEM Element: stat-item
+  &__stat-item {
+    background: #ffffff;
+    padding: 16px;
+    text-align: center;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background: #f9fafb;
+    }
+  }
+
+  // BEM Element: stat-link
+  &__stat-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  // BEM Element: stat-number
+  &__stat-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 4px;
+  }
+
+  // BEM Element: stat-label
+  &__stat-label {
+    font-size: 0.75rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
+  // BEM Element: details
+  &__details {
+    padding: 20px 24px 24px;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  // BEM Element: detail-item
+  &__detail-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    color: #4b5563;
+    font-size: 0.875rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    a {
+      color: #3b82f6;
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #2563eb;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // BEM Element: detail-icon
+  &__detail-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    color: #9ca3af;
+    flex-shrink: 0;
+  }
+}
+
+// Animation
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+// Responsive design
+@media (max-width: 640px) {
+  .usuario-card {
+    margin: 0 16px;
+    max-width: none;
+
+    &__main {
+      padding: 0 20px 20px;
+    }
+
+    &__stats {
+      margin: 20px -20px 0;
+    }
+
+    &__details {
+      padding: 16px 20px 20px;
+    }
+
+    &__avatar {
+      width: 100px;
+      height: 100px;
+    }
+
+    &__github-icon {
+      width: 32px;
+      height: 32px;
+    }
+
+    &__name {
+      font-size: 1.25rem;
+    }
+
+    &__stat-number {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .usuario-card {
+    background: #1f2937;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+
+    &__header {
+      background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%);
+    }
+
+    &__avatar {
+      border-color: #1f2937;
+    }
+
+    &__name {
+      color: #f9fafb;
+
+      a {
+        color: inherit;
+
+        &:hover {
+          color: #60a5fa;
+        }
+      }
+    }
+
+    &__real-name {
+      color: #d1d5db;
+    }
+
+    &__bio {
+      color: #9ca3af;
+    }
+
+    &__stats {
+      background: #374151;
+    }
+
+    &__stat-item {
+      background: #1f2937;
+
+      &:hover {
+        background: #111827;
+      }
+    }
+
+    &__stat-number {
+      color: #f9fafb;
+    }
+
+    &__stat-label {
+      color: #9ca3af;
+    }
+
+    &__details {
+      border-top-color: #374151;
+    }
+
+    &__detail-item {
+      color: #d1d5db;
+
+      a {
+        color: #60a5fa;
+
+        &:hover {
+          color: #3b82f6;
+        }
+      }
+    }
+
+    &__detail-icon {
+      color: #6b7280;
+    }
+  }
+}

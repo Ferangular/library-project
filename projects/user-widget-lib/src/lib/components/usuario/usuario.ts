@@ -9,7 +9,7 @@ import { tap } from 'rxjs/operators';
   selector: 'uw-usuario',
   imports: [],
   templateUrl: './usuario.html',
-  styleUrl: '../../assets/styles/styles.scss',
+  styleUrl: './usuario.scss',
 })
 export class Usuario {
   busqueda = input<string>('');
