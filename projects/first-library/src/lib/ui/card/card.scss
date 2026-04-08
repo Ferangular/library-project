@@ -1,0 +1,525 @@
+// ========================================
+// BEM METHODOLOGY - Card Component
+// Block: card | Elements: header, body, title, subtitle | Modifiers: variants, sizes, states
+// ========================================
+
+// CSS Custom Properties (Design Tokens)
+:host {
+  // Theme Variables
+  --card-bg: #ffffff;
+  --card-bg-secondary: #f8fafc;
+  --card-bg-interactive: #f1f5f9;
+  
+  // Border & Shadow
+  --card-border: #e2e8f0;
+  --card-border-hover: #cbd5e1;
+  --card-border-focus: #3b82f6;
+  --card-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --card-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --card-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --card-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  
+  // Typography
+  --card-title-color: #1e293b;
+  --card-title-color-secondary: #475569;
+  --card-text-color: #64748b;
+  --card-text-color-secondary: #94a3b8;
+  --card-subtitle-color: #6b7280;
+  
+  // Spacing
+  --card-padding-sm: 0.75rem 1rem;
+  --card-padding: 1rem 1.25rem;
+  --card-padding-lg: 1.25rem 1.5rem;
+  --card-padding-xl: 1.5rem 2rem;
+  
+  // Border Radius
+  --card-radius-sm: 0.375rem;
+  --card-radius: 0.5rem;
+  --card-radius-lg: 0.75rem;
+  --card-radius-xl: 1rem;
+  
+  // Transitions
+  --card-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --card-transition-slow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  display: block;
+}
+
+// ========================================
+// BLOCK - card
+// ========================================
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  padding: var(--card-padding);
+  box-shadow: var(--card-shadow);
+  transition: var(--card-transition);
+  position: relative;
+  overflow: hidden;
+
+  // ========================================
+  // BLOCK MODIFIERS - Size Variants
+  // ========================================
+  &--sm {
+    padding: var(--card-padding-sm);
+    border-radius: var(--card-radius-sm);
+  }
+
+  &--lg {
+    padding: var(--card-padding-lg);
+    border-radius: var(--card-radius-lg);
+  }
+
+  &--xl {
+    padding: var(--card-padding-xl);
+    border-radius: var(--card-radius-xl);
+  }
+
+  // ========================================
+  // BLOCK MODIFIERS - Visual Variants
+  // ========================================
+  &--elevated {
+    box-shadow: var(--card-shadow-md);
+    
+    &:hover {
+      box-shadow: var(--card-shadow-lg);
+    }
+  }
+
+  &--flat {
+    box-shadow: none;
+    border: 1px solid transparent;
+  }
+
+  &--outlined {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  &--interactive {
+    cursor: pointer;
+    
+    &:hover {
+      background: var(--card-bg-interactive);
+      border-color: var(--card-border-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--card-shadow-md);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: var(--card-shadow);
+    }
+  }
+
+  // ========================================
+  // BLOCK MODIFIERS - State Variants
+  // ========================================
+  &--disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &--loading {
+    pointer-events: none;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &--error {
+    border-color: #ef4444;
+    background: #fef2f2;
+  }
+
+  &--success {
+    border-color: #10b981;
+    background: #f0fdf4;
+  }
+
+  &--warning {
+    border-color: #f59e0b;
+    background: #fffbeb;
+  }
+
+  // ========================================
+  // BLOCK MODIFIERS - Theme Variants
+  // ========================================
+  &--dark {
+    --card-bg: #1e293b;
+    --card-bg-secondary: #334155;
+    --card-bg-interactive: #475569;
+    --card-border: #475569;
+    --card-border-hover: #64748b;
+    --card-title-color: #f8fafc;
+    --card-title-color-secondary: #e2e8f0;
+    --card-text-color: #cbd5e1;
+    --card-text-color-secondary: #94a3b8;
+    --card-subtitle-color: #d1d5db;
+  }
+
+  &--primary {
+    border-color: #3b82f6;
+    
+    .card__title {
+      color: #1e40af;
+    }
+  }
+
+  &--secondary {
+    border-color: #6b7280;
+    
+    .card__title {
+      color: #374151;
+    }
+  }
+
+  // ========================================
+  // FOCUS STATES
+  // ========================================
+  &:focus-visible {
+    outline: 2px solid var(--card-border-focus);
+    outline-offset: 2px;
+  }
+
+  // ========================================
+  // RESPONSIVE DESIGN
+  // ========================================
+  @media (max-width: 640px) {
+    padding: var(--card-padding-sm);
+    border-radius: var(--card-radius-sm);
+
+    &--lg {
+      padding: var(--card-padding);
+    }
+
+    &--xl {
+      padding: var(--card-padding-lg);
+    }
+  }
+}
+
+// ========================================
+// ELEMENTS
+// ========================================
+
+// ========================================
+// ELEMENT - card__header
+// ========================================
+.card__header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  // ========================================
+  // ELEMENT MODIFIERS
+  // ========================================
+  &--compact {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  &--borderless {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  &--centered {
+    align-items: center;
+    text-align: center;
+  }
+
+  &--spaced {
+    margin-bottom: 1.5rem;
+  }
+}
+
+// ========================================
+// ELEMENT - card__title
+// ========================================
+.card__title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--card-title-color);
+  letter-spacing: -0.025em;
+
+  // ========================================
+  // ELEMENT MODIFIERS
+  // ========================================
+  &--sm {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  &--lg {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  &--xl {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  &--secondary {
+    color: var(--card-title-color-secondary);
+    font-weight: 500;
+  }
+
+  &--centered {
+    text-align: center;
+  }
+
+  // Truncation for long titles
+  &--truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+// ========================================
+// ELEMENT - card__subtitle
+// ========================================
+.card__subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--card-subtitle-color);
+
+  // ========================================
+  // ELEMENT MODIFIERS
+  // ========================================
+  &--sm {
+    font-size: 0.75rem;
+  }
+
+  &--lg {
+    font-size: 1rem;
+  }
+
+  &--secondary {
+    color: var(--card-text-color-secondary);
+  }
+
+  &--centered {
+    text-align: center;
+  }
+
+  &--muted {
+    opacity: 0.7;
+  }
+
+  &--truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+// ========================================
+// ELEMENT - card__body
+// ========================================
+.card__body {
+  color: var(--card-text-color);
+  line-height: 1.6;
+  font-size: 0.875rem;
+
+  // ========================================
+  // ELEMENT MODIFIERS
+  // ========================================
+  &--sm {
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  &--lg {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  &--centered {
+    text-align: center;
+  }
+
+  &--spaced {
+    line-height: 1.8;
+  }
+
+  &--tight {
+    line-height: 1.4;
+  }
+}
+
+// ========================================
+// ELEMENT - card__footer
+// ========================================
+.card__footer {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+
+  // ========================================
+  // ELEMENT MODIFIERS
+  // ========================================
+  &--compact {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+  }
+
+  &--borderless {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0.75rem;
+  }
+
+  &--centered {
+    justify-content: center;
+  }
+
+  &--right {
+    justify-content: flex-end;
+  }
+
+  &--left {
+    justify-content: flex-start;
+  }
+}
+
+// ========================================
+// ELEMENT - card__actions
+// ========================================
+.card__actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  // ========================================
+  // ELEMENT MODIFIERS
+  // ========================================
+  &--spaced {
+    gap: 1rem;
+  }
+
+  &--right {
+    justify-content: flex-end;
+  }
+
+  &--centered {
+    justify-content: center;
+  }
+
+  &--vertical {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+// ========================================
+// ELEMENT - card__icon
+// ========================================
+.card__icon {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--card-text-color-secondary);
+
+  // ========================================
+  // ELEMENT MODIFIERS
+  // ========================================
+  &--sm {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  &--lg {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  &--primary {
+    color: #3b82f6;
+  }
+
+  &--secondary {
+    color: #6b7280;
+  }
+
+  &--success {
+    color: #10b981;
+  }
+
+  &--error {
+    color: #ef4444;
+  }
+
+  &--warning {
+    color: #f59e0b;
+  }
+}
+
+// ========================================
+// UTILITY CLASSES
+// ========================================
+.card {
+  // ========================================
+  // COMBINATORIAL MODIFIERS
+  // ========================================
+  &.card--interactive.card--elevated {
+    &:hover {
+      box-shadow: var(--card-shadow-xl);
+    }
+  }
+
+  &.card--dark.card--interactive {
+    &:hover {
+      background: var(--card-bg-secondary);
+    }
+  }
+}
+
+// ========================================
+// ACCESSIBILITY & REDUCED MOTION
+// ========================================
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+    
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+// ========================================
+// HIGH CONTRAST MODE
+// ========================================
+@media (prefers-contrast: high) {
+  .card {
+    border-width: 2px;
+    border-color: ButtonText;
+  }
+}

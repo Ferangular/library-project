@@ -1,0 +1,18 @@
+@if (notification().visible) {
+  <div class="lib-notification" [class]="'lib-notification lib-notification--' + notification().type">
+    <div class="lib-notification__content">
+      <span class="lib-notification__message">
+        {{ notification().message }}
+      </span>
+
+      <button
+        type="button"
+        class="lib-notification__close"
+        aria-label="Cerrar notificación"
+        (click)="hide()"
+      >
+        ×
+      </button>
+    </div>
+  </div>
+}

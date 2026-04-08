@@ -1,65 +1,196 @@
-# LibraryProject
+# 🚀 First Library
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.5.
+A modern Angular (v17+) library built with **standalone components**, **Signals**, and **clean architecture**.
 
-## Development server
+This library provides reusable UI components and services designed to be:
+- scalable
+- reusable
+- easy to integrate
+- ready for npm distribution
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+# ✨ Features
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- ✅ Standalone components (no NgModules)
+- ✅ Angular Signals for state management
+- ✅ OnPush change detection
+- ✅ Modern template syntax (`@if`, `@for`)
+- ✅ Clean and scalable architecture
+- ✅ Theming support via CSS variables
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-To generate a new library, run:
-
-```bash
-ng generate lib first-library --prefix=lib
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+# 📦 Installation
 
 ```bash
-ng generate --help
+npm install @tu-usuario/first-library
 ```
 
-## Building
+🧩 Available Components & Services
 
-To build the project run:
+## UI Components
+- `lib-card` → container component
+- `lib-button` → reusable button with variants
+- `lib-notification` → notification UI component
 
+## Services
+- `NotificationService` → global notification state
+
+🚀 Usage
+
+### 1. Import components
+```typescript
+import { Component, inject } from '@angular/core';
+import {
+  CardComponent,
+  ButtonComponent,
+  NotificationComponent,
+  NotificationService
+} from '@tu-usuario/first-library';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CardComponent, ButtonComponent, NotificationComponent],
+  templateUrl: './app.html',
+})
+export class AppComponent {
+  private readonly notificationService = inject(NotificationService);
+
+  showSuccess(): void {
+    this.notificationService.showSuccess('Operation successful');
+  }
+
+  showError(): void {
+    this.notificationService.showError('Something went wrong');
+  }
+
+  showInfo(): void {
+    this.notificationService.showInfo('Information message');
+  }
+}
+```
+
+### 2. Use in template
+```html
+<lib-card title="First Library Demo" subtitle="Reusable components example">
+  <p>
+    This content is rendered using components from the library.
+  </p>
+
+  <div class="actions">
+    <lib-button variant="primary" (pressed)="showSuccess()">
+      Success
+    </lib-button>
+
+    <lib-button variant="secondary" (pressed)="showInfo()">
+      Info
+    </lib-button>
+
+    <lib-button variant="danger" (pressed)="showError()">
+      Error
+    </lib-button>
+  </div>
+
+  <lib-notification></lib-notification>
+</lib-card>
+```
+
+🎨 Theming
+
+All components support customization via CSS variables.
+Example:
+```css
+lib-card {
+  --lib-card-bg: #1f2937;
+  --lib-card-title: #f9fafb;
+  --lib-card-text: #d1d5db;
+}
+```
+
+🧠 Architecture
+
+The library follows a feature-based structure:
+```
+lib/
+  ui/
+    button/
+    card/
+    notification/
+  services/
+  models/
+  tokens/
+```
+
+## Principles
+- Components are stateless and reusable
+- Services manage state using Signals
+- Public API is controlled via public-api.ts
+- No tight coupling between components
+
+🏗️ Development
+
+## Generate components
 ```bash
-ng build
+ng g c ui/component-name --project=first-library
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Build library
+```bash
+ng build first-library
+```
 
-## Running unit tests
+📦 Publishing
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Build library:
+```bash
+ng build first-library
+```
 
+## Go to dist folder:
+```bash
+cd dist/first-library
+```
+
+## Publish:
+```bash
+npm publish --access public
+```
+
+🧪 Testing
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+📚 Example API
+```typescript
+const notification = inject(NotificationService);
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
+notification.showSuccess('Saved successfully');
+notification.showError('Error occurred');
+notification.showInfo('Info message');
+notification.hide();
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+⚠️ Best Practices
 
-## Additional Resources
+## Import only from public API:
+```typescript
+import { CardComponent } from '@tu-usuario/first-library';
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## ❌ Do NOT import from internal paths:
+```typescript
+// ❌ wrong
+import { CardComponent } from 'projects/first-library/...';
+```
+
+🔮 Roadmap
+- Modal component
+- Form components
+- Theme presets
+- Accessibility improvements
+
+👨‍💻 Author
+Your Name

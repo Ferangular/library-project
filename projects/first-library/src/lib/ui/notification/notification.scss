@@ -1,0 +1,69 @@
+:host {
+  display: block;
+
+  --lib-notification-radius: 12px;
+  --lib-notification-shadow: 0 10px 24px rgb(15 23 42 / 10%);
+  --lib-notification-success-bg: #ecfdf5;
+  --lib-notification-success-border: #86efac;
+  --lib-notification-success-text: #166534;
+  --lib-notification-error-bg: #fef2f2;
+  --lib-notification-error-border: #fca5a5;
+  --lib-notification-error-text: #991b1b;
+  --lib-notification-info-bg: #eff6ff;
+  --lib-notification-info-border: #93c5fd;
+  --lib-notification-info-text: #1d4ed8;
+}
+
+.lib-notification {
+  margin-top: 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--lib-notification-radius);
+  box-shadow: var(--lib-notification-shadow);
+  overflow: hidden;
+}
+
+.lib-notification__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+}
+
+.lib-notification__message {
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.lib-notification__close {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.25rem;
+  line-height: 1;
+  padding: 0.25rem;
+  color: inherit;
+}
+
+.lib-notification__close:hover {
+  opacity: 0.75;
+}
+
+.lib-notification--success {
+  background: var(--lib-notification-success-bg);
+  border-color: var(--lib-notification-success-border);
+  color: var(--lib-notification-success-text);
+}
+
+.lib-notification--error {
+  background: var(--lib-notification-error-bg);
+  border-color: var(--lib-notification-error-border);
+  color: var(--lib-notification-error-text);
+}
+
+.lib-notification--info {
+  background: var(--lib-notification-info-bg);
+  border-color: var(--lib-notification-info-border);
+  color: var(--lib-notification-info-text);
+}

@@ -1,0 +1,13 @@
+<button
+  type="button"
+  class="lib-button"
+  [class.lib-button--primary]="variant() === 'primary'"
+  [class.lib-button--secondary]="variant() === 'secondary'"
+  [class.lib-button--danger]="variant() === 'danger'"
+  [disabled]="disabled()"
+  (click)="onClick()"
+>
+  <ng-content>
+    {{ label() }}
+  </ng-content>
+</button>
