@@ -1,64 +1,165 @@
-# UserWidgetLib
+# User Widget Library
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
+Una librería Angular moderna para mostrar información de usuarios de GitHub con un componente de búsqueda interactivo y elegante.
 
-## Code scaffolding
+## Características
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **Componente de búsqueda** con autocompletado y sugerencias
+- **Tarjeta de usuario** con diseño moderno y animaciones
+- **Soporte para modo oscuro**
+- **Totalmente responsive**
+- **BEM methodology** para estilos mantenibles
+- **Signal-based** para rendimiento óptimo
+- **TypeScript** para seguridad de tipos
+
+## Instalación
 
 ```bash
-ng generate component component-name
+npm install user-widget-lib
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Uso
 
-```bash
-ng generate --help
+Importa los componentes en tu aplicación:
+
+```typescript
+import { Component } from '@angular/core';
+import { BuscadorUsuarioComponent, UsuarioComponent } from 'user-widget-lib';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [BuscadorUsuarioComponent, UsuarioComponent],
+  template: `
+    <uw-buscador-usuario></uw-buscador-usuario>
+  `
+})
+export class AppComponent {}
 ```
 
-## Building
+## Componentes
 
-To build the library, run:
+### BuscadorUsuarioComponent
+
+Componente de búsqueda con autocompletado y sugerencias.
+
+```html
+<uw-buscador-usuario></uw-buscador-usuario>
+```
+
+Características:
+- Búsqueda en tiempo real
+- Sugerencias al pasar el cursor
+- Animaciones suaves
+- Diseño moderno con BEM
+
+### UsuarioComponent
+
+Muestra información detallada del usuario de GitHub.
+
+```html
+<uw-usuario [busqueda]="nombreUsuario"></uw-usuario>
+```
+
+Propiedades:
+- `busqueda`: string - Nombre de usuario a buscar
+
+## API Reference
+
+#### BuscadorUsuarioComponent
+
+```typescript
+export class BuscadorUsuario {
+  busquedaRealizada: EventEmitter<string>;
+}
+```
+
+#### UsuarioComponent
+
+```typescript
+export class Usuario {
+  busqueda: InputSignal<string>;
+  usuario: Signal<UsuarioInterface | null>;
+}
+```
+
+## Ejemplo completo
+
+```typescript
+import { Component } from '@angular/core';
+import { BuscadorUsuarioComponent, UsuarioComponent } from 'user-widget-lib';
+
+@Component({
+  selector: 'app-demo',
+  standalone: true,
+  imports: [BuscadorUsuarioComponent, UsuarioComponent],
+  template: `
+    <div class="container">
+      <h1>GitHub User Widget</h1>
+      <uw-buscador-usuario></uw-buscador-usuario>
+    </div>
+  `,
+  styles: [`
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+  `]
+})
+export class DemoComponent {}
+```
+
+## Dependencias
+
+- Angular 21.2.0+
+- Angular Forms 21.2.0+
+
+## Desarrollo
 
 ```bash
+# Clonar el repositorio
+git clone https://github.com/your-username/user-widget-lib.git
+cd user-widget-lib
+
+# Instalar dependencias
+npm install
+
+# Construir la librería
 ng build user-widget-lib
-```
 
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
-
-### Publishing the Library
-
-Once the project is built, you can publish your library by following these steps:
-
-1. Navigate to the `dist` directory:
-
-   ```bash
-   cd dist/user-widget-lib
-   ```
-
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
+# Ejecutar tests
 ng test
 ```
 
-## Running end-to-end tests
+## Publicación
 
-For end-to-end (e2e) testing, run:
+Para publicar una nueva versión:
 
 ```bash
-ng e2e
+# Construir la librería
+ng build user-widget-lib
+
+# Navegar al directorio de build
+cd dist/user-widget-lib
+
+# Publicar en npm
+npm publish
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Licencia
 
-## Additional Resources
+MIT License - ver archivo LICENSE para detalles.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Contribuciones
+
+¡Las contribuciones son bienvenidas! Por favor abre un issue o submit un pull request.
+
+## Changelog
+
+### 0.0.1
+- Versión inicial
+- Componente BuscadorUsuario
+- Componente Usuario
+- Soporte para modo oscuro
+- Diseño responsive

@@ -1,244 +1,493 @@
-# 🚀 First Library
+# Angular Library Development Guide
 
-A modern Angular (v17+) library built with **standalone components**, **Signals**, and **clean architecture**.
-
-This library provides reusable UI components and services designed to be:
-- scalable
-- reusable
-- easy to integrate
-- ready for npm distribution
+Guía completa para crear, desarrollar y publicar librerías Angular con componentes modernos.
 
 ---
 
-# ✨ Features
+## Tabla de Contenidos
 
-- ✅ Standalone components (no NgModules)
-- ✅ Angular Signals for state management
-- ✅ OnPush change detection
-- ✅ Modern template syntax (`@if`, `@for`)
-- ✅ Clean and scalable architecture
-- ✅ Theming support via CSS variables
+1. [Creación del Proyecto](#creación-del-proyecto)
+2. [Creación de Librerías](#creación-de-librerías)
+3. [Desarrollo de Componentes](#desarrollo-de-componentes)
+4. [Estructura del Proyecto](#estructura-del-proyecto)
+5. [Construcción y Testing](#construcción-y-testing)
+6. [Publicación en NPM](#publicación-en-npm)
+7. [Despliegue Continuo](#despliegue-continuo)
+8. [Best Practices](#best-practices)
 
 ---
 
-# 📦 Installation
+## Creación del Proyecto
 
+### 1. Crear nuevo proyecto Angular
 ```bash
-npm install @tu-usuario/first-library
+ng new library-project --standalone --style=scss --routing=false --ssr=false
+cd library-project
 ```
 
-🧩 Available Components & Services
+### 2. Estructura inicial
+```
+library-project/
+src/
+projects/
+angular.json
+package.json
+```
 
-## UI Components
-- `lib-card` → container component
-- `lib-button` → reusable button with variants
-- `lib-notification` → notification UI component
+---
 
-## Services
-- `NotificationService` → global notification state
+## Creación de Librerías
 
-🚀 Usage
+### 1. Crear una librería base
+```bash
+ng g lib ui-library --prefix=ui
+```
 
-### 1. Import components
+### 2. Crear múltiples librerías especializadas
+```bash
+# Librería de componentes UI
+ng g lib ui-components --prefix=ui
+
+# Librería de utilidades
+ng g lib utils --prefix=ut
+
+# Librería de servicios
+ng g lib services --prefix=svc
+```
+
+### 3. Configurar librerías en angular.json
+Las librerías se configuran automáticamente en `angular.json`:
+
+```json
+{
+  "projects": {
+    "ui-library": {
+      "projectType": "library",
+      "root": "projects/ui-library",
+      "sourceRoot": "projects/ui-library/src",
+      "prefix": "ui",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr"
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+## Desarrollo de Componentes
+
+### 1. Crear componentes dentro de una librería
+```bash
+# Componente básico
+ng g c ui/notification --project=ui-library
+
+# Componente con routing
+ng g c ui/card --project=ui-library --standalone
+
+# Componente con tests
+ng g c ui/button --project=ui-library --standalone --inline-style=false
+```
+
+### 2. Crear servicios
+```bash
+# Servicio en librería
+ng g s services/notification --project=ui-library
+
+# Servicio con HTTP
+ng g s services/api --project=ui-library
+```
+
+### 3. Crear interfaces y modelos
+```bash
+# Interface
+ng g interface models/user --project=ui-library --type=model
+
+# Enum
+ng g enum models/status --project=ui-library
+```
+
+### 4. Ejemplo de componente moderno
 ```typescript
-import { Component, inject } from '@angular/core';
-import {
-  CardComponent,
-  ButtonComponent,
-  NotificationComponent,
-  NotificationService
-} from '@tu-usuario/first-library';
+// projects/ui-library/src/lib/ui/notification/notification.component.ts
+import { Component, input, output, signal } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
+  selector: 'ui-notification',
   standalone: true,
-  imports: [CardComponent, ButtonComponent, NotificationComponent],
-  templateUrl: './app.html',
+  imports: [],
+  template: `
+    @if (show()) {
+      <div class="notification" [class]="type()">
+        <span>{{ message() }}</span>
+        <button (click)="close()">×</button>
+      </div>
+    }
+  `
 })
-export class AppComponent {
-  private readonly notificationService = inject(NotificationService);
-
-  showSuccess(): void {
-    this.notificationService.showSuccess('Operation successful');
-  }
-
-  showError(): void {
-    this.notificationService.showError('Something went wrong');
-  }
-
-  showInfo(): void {
-    this.notificationService.showInfo('Information message');
+export class NotificationComponent {
+  message = input.required<string>();
+  type = input<'success' | 'error' | 'info'>('info');
+  closed = output<void>();
+  
+  show = signal(true);
+  
+  close() {
+    this.show.set(false);
+    this.closed.emit();
   }
 }
 ```
 
-### 2. Use in template
-```html
-<lib-card title="First Library Demo" subtitle="Reusable components example">
-  <p>
-    This content is rendered using components from the library.
-  </p>
+---
 
-  <div class="actions">
-    <lib-button variant="primary" (pressed)="showSuccess()">
-      Success
-    </lib-button>
+## Estructura del Proyecto
 
-    <lib-button variant="secondary" (pressed)="showInfo()">
-      Info
-    </lib-button>
-
-    <lib-button variant="danger" (pressed)="showError()">
-      Error
-    </lib-button>
-  </div>
-
-  <lib-notification></lib-notification>
-</lib-card>
+### Estructura recomendada para múltiples librerías:
+```
+library-project/
+src/
+  app/                          # Aplicación demo
+projects/
+  ui-library/                   # Librería principal de UI
+    src/
+      lib/
+        ui/
+          notification/
+          card/
+          button/
+        services/
+          notification.service.ts
+        models/
+          notification.model.ts
+        public-api.ts           # Exportaciones públicas
+      package.json              # Configuración de la librería
+      ng-package.json           # Configuración de build
+      tsconfig.lib.json
+      README.md
+  
+  utils-library/                # Librería de utilidades
+    src/
+      lib/
+        date/
+        string/
+        validation/
+        public-api.ts
+  
+  shared-library/               # Librería compartida
+    src/
+      lib/
+        interfaces/
+        constants/
+        types/
+        public-api.ts
 ```
 
-🎨 Theming
+### Configurar public-api.ts
+```typescript
+// projects/ui-library/src/public-api.ts
+export * from './lib/ui/notification/notification.component';
+export * from './lib/ui/card/card.component';
+export * from './lib/ui/button/button.component';
+export * from './lib/services/notification.service';
+export * from './lib/models/notification.model';
+```
 
-All components support customization via CSS variables.
-Example:
-```css
-lib-card {
-  --lib-card-bg: #1f2937;
-  --lib-card-title: #f9fafb;
-  --lib-card-text: #d1d5db;
+---
+
+## Construcción y Testing
+
+### 1. Construir una librería específica
+```bash
+ng build ui-library
+```
+
+### 2. Construir todas las librerías
+```bash
+ng build ui-library && ng build utils-library && ng build shared-library
+```
+
+### 3. Watch mode para desarrollo
+```bash
+ng build ui-library --watch
+```
+
+### 4. Ejecutar tests
+```bash
+# Tests de una librería
+ng test ui-library
+
+# Tests de todas las librerías
+ng test --watch=false --bail=false
+```
+
+### 5. Verificar el build
+```bash
+# Verificar archivos generados
+ls -la dist/ui-library/
+```
+
+---
+
+## Publicación en NPM
+
+### 1. Configurar package.json de la librería
+```json
+{
+  "name": "@tu-usuario/ui-library",
+  "version": "1.0.0",
+  "description": "Angular UI Components Library",
+  "keywords": ["angular", "ui", "components", "typescript"],
+  "author": "Tu Nombre",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tu-usuario/ui-library.git"
+  },
+  "peerDependencies": {
+    "@angular/common": "^17.0.0",
+    "@angular/core": "^17.0.0"
+  }
 }
 ```
 
-🧠 Architecture
-
-The library follows a feature-based structure:
-```
-lib/
-  ui/
-    button/
-    card/
-    notification/
-  services/
-  models/
-  tokens/
-```
-
-## Principles
-- Components are stateless and reusable
-- Services manage state using Signals
-- Public API is controlled via public-api.ts
-- No tight coupling between components
-
-🏗️ Development
-
-## Generate components
+### 2. Verificar disponibilidad del nombre
 ```bash
-ng g c ui/component-name --project=first-library
+npm view @tu-usuario/ui-library
 ```
 
-## Build library
+### 3. Construir la librería
 ```bash
-ng build first-library
+ng build ui-library
 ```
 
-📦 Publishing
-
-## 🧪 Pre-flight checks (verificación antes de publicar)
-
-### 1. Verificar disponibilidad del nombre:
+### 4. Probar localmente
 ```bash
-npm view fer-angular-first-library
-```
-- Si devuelve `404` o `E404` → ✅ Nombre disponible
-- Si muestra información → ❌ Nombre ocupado, elige otro
+# Crear paquete local
+npm pack ./dist/ui-library
 
-### 2. Crear paquete localmente (testing):
-```bash
-npm pack ./dist/first-library
-```
-Esto genera un `.tgz` para probar localmente antes de publicar.
-
-## 🚀 Pasos para Publicar:
-
-### 1. Construir la librería:
-```bash
-ng build first-library
+# Instalar en proyecto de prueba
+npm install ./ui-library-1.0.0.tgz --save-dev
 ```
 
-### 2. Navegar al directorio dist:
+### 5. Publicar en NPM
 ```bash
-cd dist/first-library
-```
-
-### 3. Publicar con el nuevo nombre:
-```bash
-npm publish --access public
-```
-
-## 🔧 Si tienes problemas de permisos:
-
-### Verificar usuario actual:
-```bash
-npm whoami
-```
-
-### Iniciar sesión si es necesario:
-```bash
+# Iniciar sesión en NPM
 npm login
-```
 
-### 📋 Pasos alternativos para Publicar:
-1. Navegar al directorio:
-```bash
-cd dist/first-library
-```
+# Navegar al directorio de build
+cd dist/ui-library
 
-2. Publicar:
-```bash
+# Publicar
 npm publish --access public
 ```
 
-## 🎯 Checklist antes de publicar:
-- [ ] Nombre del paquete disponible
-- [ ] `ng build` exitoso
-- [ ] `npm pack` genera paquete correctamente
-- [ ] Usuario logueado correctamente
-- [ ] README.md actualizado
-- [ ] Versión incrementada en package.json
-
-🧪 Testing
+### 6. Verificar publicación
 ```bash
-ng test
+npm view @tu-usuario/ui-library
+npm info @tu-usuario/ui-library
 ```
 
-📚 Example API
+---
+
+## Despliegue Continuo
+
+### 1. Script de publicación automatizada
+```json
+{
+  "scripts": {
+    "build:libs": "ng build ui-library && ng build utils-library",
+    "test:libs": "ng test ui-library --watch=false --bail=true",
+    "publish:ui": "cd dist/ui-library && npm publish --access public",
+    "publish:all": "npm run build:libs && npm run publish:ui"
+  }
+}
+```
+
+### 2. GitHub Actions para publicación automática
+```yaml
+# .github/workflows/publish.yml
+name: Publish Library
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+      
+      - run: npm ci
+      - run: ng build ui-library
+      - run: npm publish ./dist/ui-library --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+```
+
+---
+
+## Best Practices
+
+### 1. Versionado Semántico
+```bash
+# Patch (1.0.0 -> 1.0.1)
+npm version patch
+
+# Minor (1.0.0 -> 1.1.0)
+npm version minor
+
+# Major (1.0.0 -> 2.0.0)
+npm version major
+```
+
+### 2. Configuración de tsconfig.lib.json
+```json
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/lib",
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": true
+  },
+  "exclude": ["src/test.ts", "**/*.spec.ts"]
+}
+```
+
+### 3. Configuración de ng-package.json
+```json
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/ui-library",
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "styleIncludePaths": ["../styles"]
+  }
+}
+```
+
+### 4. Testing de componentes
 ```typescript
-const notification = inject(NotificationService);
+// notification.component.spec.ts
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NotificationComponent } from './notification.component';
 
-notification.showSuccess('Saved successfully');
-notification.showError('Error occurred');
-notification.showInfo('Info message');
-notification.hide();
+describe('NotificationComponent', () => {
+  let component: NotificationComponent;
+  let fixture: ComponentFixture<NotificationComponent>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [NotificationComponent]
+    });
+    fixture = TestBed.createComponent(NotificationComponent);
+    component = fixture.componentInstance;
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should show message', () => {
+    component.message.set('Test message');
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('Test message');
+  });
+});
 ```
 
-⚠️ Best Practices
-
-## Import only from public API:
+### 5. Documentación de componentes
 ```typescript
-import { CardComponent } from '@tu-usuario/first-library';
+/**
+ * Notification component for displaying messages
+ * @selector ui-notification
+ * @standalone true
+ */
+@Component({
+  selector: 'ui-notification',
+  standalone: true,
+  template: `
+    <div class="notification">
+      {{ message() }}
+    </div>
+  `
+})
+export class NotificationComponent {
+  /** Message to display */
+  message = input.required<string>();
+  
+  /** Type of notification */
+  type = input<'success' | 'error' | 'info'>('info');
+}
 ```
 
-## ❌ Do NOT import from internal paths:
-```typescript
-// ❌ wrong
-import { CardComponent } from 'projects/first-library/...';
+---
+
+## Comandos Útiles
+
+### Desarrollo
+```bash
+# Crear nueva librería
+ng g lib nombre-libreria --prefix=prefix
+
+# Crear componente en librería
+ng g c ui/component-name --project=nombre-libreria
+
+# Crear servicio
+ng g s services/service-name --project=nombre-libreria
+
+# Build en watch mode
+ng build nombre-libreria --watch
+
+# Ejecutar tests
+ng test nombre-libreria
 ```
 
-🔮 Roadmap
-- Modal component
-- Form components
-- Theme presets
-- Accessibility improvements
+### Publicación
+```bash
+# Verificar nombre disponible
+npm view @tu-usuario/nombre-libreria
 
-👨‍💻 Author
-Your Name
+# Crear paquete para testing
+npm pack ./dist/nombre-libreria
+
+# Publicar
+cd dist/nombre-libreria && npm publish --access public
+
+# Verificar publicación
+npm info @tu-usuario/nombre-libreria
+```
+
+---
+
+## Checklist de Publicación
+
+- [ ] Librería construida sin errores
+- [ ] Todos los tests pasan
+- [ ] package.json configurado correctamente
+- [ ] public-api.ts exporta todo lo necesario
+- [ ] README.md actualizado
+- [ ] Licencia agregada
+- [ ] Nombre disponible en NPM
+- [ ] Versión actualizada
+- [ ] Probar paquete localmente
+- [ ] Publicado exitosamente
+
+---
+
+## Recursos Adicionales
+
+- [Angular Library Guide](https://angular.dev/guide/libraries)
+- [NPM Documentation](https://docs.npmjs.com/)
+- [Semantic Versioning](https://semver.org/)
+- [Angular Component Best Practices](https://angular.dev/guide/styleguide)
