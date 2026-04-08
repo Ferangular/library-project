@@ -5,7 +5,8 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "first-library": ["./dist/first-library", "./dist/first-library"]
+      "first-library": ["./dist/first-library", "./dist/first-library"],
+      "user-widget-lib": ["./dist/user-widget-lib"]
     },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -43,6 +44,12 @@
     },
     {
       "path": "./projects/first-library/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/user-widget-lib/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/user-widget-lib/tsconfig.spec.json"
     }
   ]
 }
