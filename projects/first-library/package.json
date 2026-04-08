@@ -1,6 +1,25 @@
 {
-  "name": "first-library",
+  "name": "@fer/first-library",
   "version": "0.0.1",
+  "description": "Reusable Angular standalone library with card, button and notification components",
+  "author": "Fer",
+  "license": "MIT",
+  "keywords": [
+    "angular",
+    "library",
+    "standalone",
+    "signals",
+    "ui",
+    "components"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tu-usuario/first-library.git"
+  },
+  "homepage": "https://github.com/Ferangular/first-library#readme",
+  "bugs": {
+    "url": "https://github.com/Ferangular/first-library/issues"
+  },
   "peerDependencies": {
     "@angular/common": "^21.2.0",
     "@angular/core": "^21.2.0"
