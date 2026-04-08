@@ -4,6 +4,9 @@
   "compileOnSave": false,
   "compilerOptions": {
     "strict": true,
+    "paths": {
+      "first-library": ["./dist/first-library"]
+    },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
@@ -28,6 +31,12 @@
     },
     {
       "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/first-library/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/first-library/tsconfig.spec.json"
     }
   ]
 }

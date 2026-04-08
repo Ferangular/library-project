@@ -1,0 +1,82 @@
+<div class="library-container">
+  <header class="library-header">
+    <div class="header-content">
+      <div class="icon-wrapper">
+        <svg class="library-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M9 6V18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M15 6V18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="header-text">
+        <h1>Angular Library Demo</h1>
+        <p class="subtitle">First Library - Interactive Learning Component</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="library-content">
+    <section class="feature-section">
+      <h2>🚀 Features Demonstrated</h2>
+      <div class="features-grid">
+        @for (feature of features; track feature.title) {
+          <div class="feature-card">
+            <div class="feature-icon">{{ feature.icon }}</div>
+            <h3>{{ feature.title }}</h3>
+            <p>{{ feature.description }}</p>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="interactive-section">
+      <h2>🎯 Interactive Counter</h2>
+      <div class="counter-demo">
+        <div class="counter-display">
+          <span class="counter-value">{{ counter() }}</span>
+          <span class="counter-label">Clicks</span>
+        </div>
+        <div class="counter-controls">
+          <button (click)="decrement()" class="btn btn-decrement">−</button>
+          <button (click)="reset()" class="btn btn-reset">Reset</button>
+          <button (click)="increment()" class="btn btn-increment">+</button>
+        </div>
+        <div class="counter-info">
+          <p>Status: <span class="status" [class.positive]="isPositive()" [class.negative]="!isPositive()">{{ isPositive() ? 'Positive' : 'Zero or Negative' }}</span></p>
+          <p>Doubled: <span class="doubled">{{ doubled() }}</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="code-section">
+      <h2>💻 Usage Example</h2>
+      <div class="code-example">
+        <pre><code>&lt;lib-first-library&gt;&lt;/lib-first-library&gt;</code></pre>
+        <p class="code-note">Simply add this component to any Angular template to use the library!</p>
+      </div>
+    </section>
+
+    <section class="stats-section">
+      <h2>📊 Library Statistics</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value">{{ version }}</div>
+          <div class="stat-label">Version</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ features.length }}</div>
+          <div class="stat-label">Features</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">Angular {{ angularVersion }}</div>
+          <div class="stat-label">Framework</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="library-footer">
+    <p>Built with ❤️ for Angular Learning</p>
+    <p class="footer-note">This is an educational library component demonstrating best practices</p>
+  </footer>
+</div>
