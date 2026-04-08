@@ -5,8 +5,10 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
+      "api-youtube-library": ["./dist/api-youtube-library"],
       "first-library": ["./dist/first-library", "./dist/first-library"],
-      "user-widget-lib": ["./dist/user-widget-lib"]
+      "user-widget-lib": ["./dist/user-widget-lib"],
+      "utils": ["./dist/utils"]
     },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -50,6 +52,18 @@
     },
     {
       "path": "./projects/user-widget-lib/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/api-youtube-library/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/api-youtube-library/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/utils/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/utils/tsconfig.spec.json"
     }
   ]
 }

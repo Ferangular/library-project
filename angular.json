@@ -132,6 +132,32 @@
           }
         }
       }
+    },
+    "api-youtube-library": {
+      "projectType": "library",
+      "root": "projects/api-youtube-library",
+      "sourceRoot": "projects/api-youtube-library/src",
+      "prefix": "ay",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/api-youtube-library/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/api-youtube-library/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/api-youtube-library/tsconfig.spec.json"
+          }
+        }
+      }
     }
   }
 }
