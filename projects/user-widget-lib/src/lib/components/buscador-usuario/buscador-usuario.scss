@@ -36,7 +36,7 @@
     font-size: 1rem;
     line-height: 1.5;
     color: #374151;
-    background: #ffffff;
+    background: #838080;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     outline: none;
     cursor: pointer;
@@ -44,7 +44,7 @@
     // BEM Modifier: input--hover
     &:hover {
       border-color: #d1d5db;
-      background: #f9fafb;
+      background: #838080;
       transform: scale(1.01);
     }
 
@@ -52,7 +52,7 @@
     &:focus {
       border-color: #3b82f6;
       box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-      background: #ffffff;
+      background: #838080;
       transform: scale(1.02);
     }
 
