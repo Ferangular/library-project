@@ -143,20 +143,68 @@ ng build first-library
 
 📦 Publishing
 
-## Build library:
+## 🧪 Pre-flight checks (verificación antes de publicar)
+
+### 1. Verificar disponibilidad del nombre:
+```bash
+npm view fer-angular-first-library
+```
+- Si devuelve `404` o `E404` → ✅ Nombre disponible
+- Si muestra información → ❌ Nombre ocupado, elige otro
+
+### 2. Crear paquete localmente (testing):
+```bash
+npm pack ./dist/first-library
+```
+Esto genera un `.tgz` para probar localmente antes de publicar.
+
+## 🚀 Pasos para Publicar:
+
+### 1. Construir la librería:
 ```bash
 ng build first-library
 ```
 
-## Go to dist folder:
+### 2. Navegar al directorio dist:
 ```bash
 cd dist/first-library
 ```
 
-## Publish:
+### 3. Publicar con el nuevo nombre:
 ```bash
 npm publish --access public
 ```
+
+## 🔧 Si tienes problemas de permisos:
+
+### Verificar usuario actual:
+```bash
+npm whoami
+```
+
+### Iniciar sesión si es necesario:
+```bash
+npm login
+```
+
+### 📋 Pasos alternativos para Publicar:
+1. Navegar al directorio:
+```bash
+cd dist/first-library
+```
+
+2. Publicar:
+```bash
+npm publish --access public
+```
+
+## 🎯 Checklist antes de publicar:
+- [ ] Nombre del paquete disponible
+- [ ] `ng build` exitoso
+- [ ] `npm pack` genera paquete correctamente
+- [ ] Usuario logueado correctamente
+- [ ] README.md actualizado
+- [ ] Versión incrementada en package.json
 
 🧪 Testing
 ```bash
