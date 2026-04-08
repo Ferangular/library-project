@@ -1,64 +1,196 @@
-# FirstLibrary
+# 🚀 First Library
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
+A modern Angular (v17+) library built with **standalone components**, **Signals**, and **clean architecture**.
 
-## Code scaffolding
+This library provides reusable UI components and services designed to be:
+- scalable
+- reusable
+- easy to integrate
+- ready for npm distribution
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
+
+# ✨ Features
+
+- ✅ Standalone components (no NgModules)
+- ✅ Angular Signals for state management
+- ✅ OnPush change detection
+- ✅ Modern template syntax (`@if`, `@for`)
+- ✅ Clean and scalable architecture
+- ✅ Theming support via CSS variables
+
+---
+
+# 📦 Installation
 
 ```bash
-ng generate component component-name
+npm install @tu-usuario/first-library
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+🧩 Available Components & Services
 
+## UI Components
+- `lib-card` → container component
+- `lib-button` → reusable button with variants
+- `lib-notification` → notification UI component
+
+## Services
+- `NotificationService` → global notification state
+
+🚀 Usage
+
+### 1. Import components
+```typescript
+import { Component, inject } from '@angular/core';
+import {
+  CardComponent,
+  ButtonComponent,
+  NotificationComponent,
+  NotificationService
+} from '@tu-usuario/first-library';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [CardComponent, ButtonComponent, NotificationComponent],
+  templateUrl: './app.html',
+})
+export class AppComponent {
+  private readonly notificationService = inject(NotificationService);
+
+  showSuccess(): void {
+    this.notificationService.showSuccess('Operation successful');
+  }
+
+  showError(): void {
+    this.notificationService.showError('Something went wrong');
+  }
+
+  showInfo(): void {
+    this.notificationService.showInfo('Information message');
+  }
+}
+```
+
+### 2. Use in template
+```html
+<lib-card title="First Library Demo" subtitle="Reusable components example">
+  <p>
+    This content is rendered using components from the library.
+  </p>
+
+  <div class="actions">
+    <lib-button variant="primary" (pressed)="showSuccess()">
+      Success
+    </lib-button>
+
+    <lib-button variant="secondary" (pressed)="showInfo()">
+      Info
+    </lib-button>
+
+    <lib-button variant="danger" (pressed)="showError()">
+      Error
+    </lib-button>
+  </div>
+
+  <lib-notification></lib-notification>
+</lib-card>
+```
+
+🎨 Theming
+
+All components support customization via CSS variables.
+Example:
+```css
+lib-card {
+  --lib-card-bg: #1f2937;
+  --lib-card-title: #f9fafb;
+  --lib-card-text: #d1d5db;
+}
+```
+
+🧠 Architecture
+
+The library follows a feature-based structure:
+```
+lib/
+  ui/
+    button/
+    card/
+    notification/
+  services/
+  models/
+  tokens/
+```
+
+## Principles
+- Components are stateless and reusable
+- Services manage state using Signals
+- Public API is controlled via public-api.ts
+- No tight coupling between components
+
+🏗️ Development
+
+## Generate components
 ```bash
-ng generate --help
+ng g c ui/component-name --project=first-library
 ```
 
-## Building
-
-To build the library, run:
-
+## Build library
 ```bash
 ng build first-library
 ```
 
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
+📦 Publishing
 
-### Publishing the Library
+## Build library:
+```bash
+ng build first-library
+```
 
-Once the project is built, you can publish your library by following these steps:
+## Go to dist folder:
+```bash
+cd dist/first-library
+```
 
-1. Navigate to the `dist` directory:
+## Publish:
+```bash
+npm publish --access public
+```
 
-   ```bash
-   cd dist/first-library
-   ```
-
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
+🧪 Testing
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+📚 Example API
+```typescript
+const notification = inject(NotificationService);
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
+notification.showSuccess('Saved successfully');
+notification.showError('Error occurred');
+notification.showInfo('Info message');
+notification.hide();
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+⚠️ Best Practices
 
-## Additional Resources
+## Import only from public API:
+```typescript
+import { CardComponent } from '@tu-usuario/first-library';
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## ❌ Do NOT import from internal paths:
+```typescript
+// ❌ wrong
+import { CardComponent } from 'projects/first-library/...';
+```
+
+🔮 Roadmap
+- Modal component
+- Form components
+- Theme presets
+- Accessibility improvements
+
+👨‍💻 Author
+Your Name
