@@ -86,6 +86,13 @@
           "changeDetection": "OnPush"
         }
       },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss",
+          "standalone": true,
+          "changeDetection": "OnPush"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
@@ -112,6 +119,13 @@
       "root": "projects/user-widget-lib",
       "sourceRoot": "projects/user-widget-lib/src",
       "prefix": "uw",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss",
+          "standalone": true,
+          "changeDetection": "OnPush"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
@@ -138,6 +152,13 @@
       "root": "projects/api-youtube-library",
       "sourceRoot": "projects/api-youtube-library/src",
       "prefix": "ay",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss",
+          "standalone": true,
+          "changeDetection": "OnPush"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
