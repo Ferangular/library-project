@@ -1,0 +1,58 @@
+<div class="youtube-browser">
+  <!-- Search Section -->
+  <ay-user-search (channelSelected)="onChannelSelected($event)"></ay-user-search>
+
+  <!-- Channel Section -->
+  @if (channelId()) {
+    <div class="channel-section">
+      <div class="section-header">
+        <h3>Información del Canal</h3>
+        <button (click)="clearAll()" class="clear-all-btn">Limpiar todo</button>
+      </div>
+      <ay-channel [channelId]="channelId()"></ay-channel>
+    </div>
+  }
+
+  <!-- Playlist Section -->
+  @if (channelId()) {
+    <div class="playlist-section">
+      <div class="section-header">
+        <h3>Playlists del Canal</h3>
+        <div class="playlist-selector">
+          <label for="playlist-select">Seleccionar playlist:</label>
+          <select 
+            id="playlist-select" 
+            (change)="onPlaylistSelected($any($event.target).value)"
+            class="playlist-dropdown"
+          >
+            <option value="">Selecciona una playlist...</option>
+            <!-- Options will be populated dynamically -->
+            <option value="PLCKuOXG0bPi3VFoG-5EsdfDAbniRmtWt9">VibeCoding - Con Antigravity</option>
+            <option value="PLCKuOXG0bPi06FGtkfaXLGU4C7p91EFHc">Expo - Push Notifications</option>
+            <option value="PLCKuOXG0bPi2T9u1GeWrXQmrAcEEamMGf">Vitest + Angular</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Videos Section -->
+  @if (playlistId()) {
+    <div class="videos-section">
+      <div class="section-header">
+        <h3>Videos de la Playlist</h3>
+        <span class="playlist-info">Playlist ID: {{ playlistId() }}</span>
+      </div>
+      <ay-playlist-items [playlistId]="playlistId()"></ay-playlist-items>
+    </div>
+  }
+
+  <!-- Empty State -->
+  @if (!channelId()) {
+    <div class="empty-state">
+      <div class="empty-icon">YouTube</div>
+      <h3>Busca un canal para comenzar</h3>
+      <p>Usa el buscador de arriba para encontrar cualquier canal de YouTube y explorar su contenido.</p>
+    </div>
+  }
+</div>

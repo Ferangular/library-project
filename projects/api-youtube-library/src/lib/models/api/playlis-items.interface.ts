@@ -1,7 +1,7 @@
 export interface PlaylistItems {
     kind: string;
     etag: string;
-    nextPageToken: string;
+    nextPageToken: string | null;
     pageInfo: PageInfo;
     items: Item[];
 }

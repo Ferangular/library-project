@@ -17,6 +17,8 @@ export class PlaylistItems {
   private readonly modal = inject(ModalService);
 
   readonly playlistId = input<string>('');
+  
+  private currentPlaylistId = signal<string>('');
 
   readonly videos = signal<Item[]>([]);
   readonly isLoading = signal(false);
@@ -32,9 +34,20 @@ export class PlaylistItems {
   constructor() {
     effect(() => {
       const playlistId = this.resolvedPlaylistId();
+      const currentId = this.currentPlaylistId();
 
-      this.resetState();
-      this.loadPlaylist(playlistId, false);
+      console.log('DEBUG: Effect triggered - PlaylistId:', playlistId, 'CurrentId:', currentId);
+      console.log('DEBUG: Current videos count:', this.videos().length);
+      console.log('DEBUG: Has videos:', this.hasVideos());
+
+      if (playlistId !== currentId) {
+        console.log('DEBUG: Playlist ID changed from', currentId, 'to', playlistId);
+        this.currentPlaylistId.set(playlistId);
+        this.resetState();
+        this.loadPlaylist(playlistId, false);
+      } else {
+        console.log('DEBUG: Playlist ID unchanged, skipping reload');
+      }
     });
   }
 
@@ -48,7 +61,7 @@ export class PlaylistItems {
 
   showVideo(video: Item): void {
     const videoItem: Video = {
-      id: video.snippet.resourceId.videoId,
+      id: video.contentDetails.videoId,
       title: video.snippet.title,
       description: video.snippet.description,
     };
@@ -57,21 +70,40 @@ export class PlaylistItems {
   }
 
   private loadPlaylist(playlistId: string, loadMore: boolean): void {
+    console.log('DEBUG: loadPlaylist called with:', { playlistId, loadMore });
     this.isLoading.set(true);
     this.error.set(null);
 
     this.api.getItemsByPlaylist(playlistId, loadMore).subscribe({
-      next: () => {
+      next: (videos) => {
+        console.log('DEBUG: Videos received in component:', videos);
+        this.videos.set(videos);
         this.isLoading.set(false);
+        console.log('DEBUG: Component state - Videos:', this.videos().length, 'Loading:', this.isLoading(), 'Error:', this.error());
       },
-      error: () => {
-        this.error.set('No se pudieron cargar los vídeos.');
+      error: (err) => {
+        console.log('DEBUG: Playlist error:', err);
+        console.log('DEBUG: Playlist error status:', err.status);
+        console.log('DEBUG: Playlist error message:', err.message);
+        console.log('DEBUG: Playlist error URL:', err.url);
+        
+        let errorMessage = 'No se pudieron cargar los vídeos.';
+        if (err.status === 403) {
+          errorMessage = 'Error de permisos: Revisa tu API key de YouTube.';
+        } else if (err.status === 404) {
+          errorMessage = 'Playlist no encontrada.';
+        } else if (err.status === 0) {
+          errorMessage = 'Error de conexión: Revisa tu internet.';
+        }
+        
+        this.error.set(errorMessage);
         this.isLoading.set(false);
       },
     });
   }
 
   private resetState(): void {
+    console.log('DEBUG: Resetting state - clearing videos and errors');
     this.videos.set([]);
     this.error.set(null);
   }

@@ -7,6 +7,8 @@ export { Channel } from './lib/components/channel/channel';
 export * from './lib/components/modal-video/modal-video';
 export { PlaylistItems as PlaylistItemsComponent } from './lib/components/playlist-items/playlist-items';
 export { ModalTrigger } from './lib/components/modal-trigger/modal-trigger';
+export { UserSearch } from './lib/components/user-search/user-search';
+export { YoutubeBrowser } from './lib/components/youtube-browser/youtube-browser';
 export * from './lib/components/user-last-playlist/user-last-playlist';
 export * from './lib/components/video-player/video-player';
 

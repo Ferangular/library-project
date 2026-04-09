@@ -6,7 +6,7 @@
 
 @if (hasVideos()) {
   <div class="row videos">
-    @for (video of videos(); track video.snippet.resourceId.videoId; let i = $index) {
+    @for (video of videos(); track video.contentDetails.videoId; let i = $index) {
       <div class="col-md-4 mb-4">
         <div class="card h-100">
           <img
@@ -47,7 +47,10 @@
 }
 
 @if (isLoading()) {
-  <p class="text-muted">Cargando vídeos...</p>
+  <div class="loading-container">
+    <div class="loading-spinner"></div>
+    <p class="text-muted">Cargando vídeos...</p>
+  </div>
 }
 
 @if (hasVideos() && !noMoreVideos()) {
@@ -55,8 +58,16 @@
     type="button"
     class="btn btn-outline-info morevideos"
     (click)="loadMore()"
+    [disabled]="isLoading()"
   >
-    Cargar más videos
+    @if (isLoading()) {
+      <div class="loading-more">
+        <div class="spinner-small"></div>
+        Cargando más videos...
+      </div>
+    } @else {
+      Cargar más videos
+    }
   </button>
 }
 

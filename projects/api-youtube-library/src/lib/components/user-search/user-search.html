@@ -1,0 +1,86 @@
+<div class="user-search-container">
+  <!-- Search Input -->
+  <div class="search-section">
+    <div class="search-input-group">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="Buscar canal de YouTube..."
+        class="search-input"
+        (keyup)="onKeyPress($event)"
+        [disabled]="isLoading()"
+      />
+      <button
+        (click)="onSearch()"
+        class="search-btn"
+        [disabled]="isLoading() || !searchQuery().trim()"
+      >
+        @if (isLoading()) {
+          <div class="spinner-small"></div>
+        } @else {
+          Buscar
+        }
+      </button>
+    </div>
+
+    <!-- Error Message -->
+    @if (error()) {
+      <div class="error-message">
+        {{ error() }}
+      </div>
+    }
+
+    <!-- Default Option -->
+    <div class="default-option">
+      <button (click)="selectFernandoHerrera()" class="default-btn">
+        <div class="default-content">
+          <div class="default-info">
+            <span class="default-title">🎯 Ver videos de Fernando Herrera</span>
+            <span class="default-subtitle">Canal por defecto</span>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Selected Channel Display -->
+  @if (selectedChannel()) {
+    <div class="selected-channel">
+      <div class="selected-info">
+        <span class="channel-name">{{ selectedChannel()!.title }}</span>
+        <span class="channel-id">{{ selectedChannel()!.id }}</span>
+      </div>
+      <button (click)="clearSelection()" class="clear-btn">
+        ×
+      </button>
+    </div>
+  }
+
+  <!-- Search Results -->
+  @if (searchResults().length > 0) {
+    <div class="search-results">
+      <div class="results-header">Resultados de búsqueda:</div>
+      <div class="results-list">
+        @for (channel of searchResults(); track channel.id.channelId) {
+          <div class="result-item" (click)="selectChannel(channel)">
+            <img
+              [src]="channel.snippet.thumbnails.default.url"
+              [alt]="channel.snippet.title"
+              class="channel-thumbnail"
+            />
+            <div class="channel-info">
+              <div class="channel-title">{{ channel.snippet.channelTitle }}</div>
+              <div class="channel-description">
+                {{ channel.snippet.description | shortDescription: 100 }}
+              </div>
+              <div class="channel-meta">
+                {{ channel.id.channelId }}
+              </div>
+            </div>
+            <div class="select-indicator">+</div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>
