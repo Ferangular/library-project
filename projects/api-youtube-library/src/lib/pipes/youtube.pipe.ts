@@ -14,7 +14,7 @@ export class YoutubePipe {
       return this.domSanitizer.bypassSecurityTrustResourceUrl('');
     }
 
-    const videoUrl = `${VIDEOEMBED}${value}`;
+    const videoUrl = `${VIDEOEMBED}${value}?autoplay=1&mute=0&controls=1&rel=0`;
     return this.domSanitizer.bypassSecurityTrustResourceUrl(videoUrl);
   }
 }
