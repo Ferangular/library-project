@@ -433,6 +433,85 @@ export class NotificationComponent {
 
 ---
 
+## Configuración de API Key de YouTube
+
+### Método 1: Variables de Entorno (Recomendado)
+
+Para mantener tu API key segura y no exponerla en el código fuente:
+
+1. **Crear archivo .env**
+```bash
+# En la raíz del proyecto
+touch .env
+```
+
+2. **Agregar tu API key**
+```env
+YOUTUBE_API_KEY=tu_api_key_aqui
+```
+
+3. **Configurar app.config.ts**
+```typescript
+import { ApplicationConfig } from '@angular/core';
+import { environment } from '../environments/environment';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    {
+      provide: 'config',
+      useValue: {
+        apiKey: process.env['YOUTUBE_API_KEY'] || environment.youtubeApiKey,
+        showLog: true
+      }
+    }
+  ]
+};
+```
+
+### Método 2: Archivo de entorno
+
+Para desarrollo rápido, puedes actualizar directamente:
+
+```typescript
+// src/environments/environment.ts
+export const environment = {
+  production: false,
+  youtubeApiKey: 'tu_api_key_aqui'
+};
+```
+
+### Obtener una API Key
+
+1. Ve a [Google Cloud Console](https://console.cloud.google.com/)
+2. Crea un nuevo proyecto o selecciona uno existente
+3. Ve a **APIs & Services** > **Credentials**
+4. Haz clic en **+ CREATE CREDENTIALS** > **API Key**
+5. Habilita **YouTube Data API v3** en **APIs & Services** > **Library**
+6. Copia tu API key
+
+### Buenas Prácticas
+
+- ✅ **Usa variables de entorno** para producción
+- ✅ **Nunca commits tu API key** en el repositorio
+- ✅ **Agrega .env a .gitignore**
+- ✅ **Usa restricciones de API** para producción (IP, HTTP referer)
+- ❌ **No compartas tu API key** públicamente
+
+### Archivo .gitignore
+
+Asegúrate de tener en tu `.gitignore`:
+```
+# Environment variables
+.env
+.env.local
+.env.production
+
+# API Keys
+*.key
+```
+
+---
+
 ## Comandos Útiles
 
 ### Desarrollo
