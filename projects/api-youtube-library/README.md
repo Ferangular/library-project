@@ -62,7 +62,7 @@ La API key se cargará automáticamente desde las variables de entorno en `app.c
 ## Enlaces útiles
 
 - [Google Cloud Console](https://console.cloud.google.com/)
-- [YouTube Data API v3 Documentation](https://developers.google.com/youtube/v3)
+- [YouTube Data API v3 Documentation](https://developers.google.com/youtube/v3/docs?hl=es-419)
 - [Panel de APIs](https://console.cloud.google.com/apis/api/youtube.googleapis.com/metrics)
 
 ## Code scaffolding
