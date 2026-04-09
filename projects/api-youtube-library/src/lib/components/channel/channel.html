@@ -1,0 +1,35 @@
+@if (error()) {
+  <div class="alert alert-danger" role="alert">
+    {{ error() }}
+  </div>
+}
+
+@if (isLoading()) {
+  <p class="text-muted">Cargando canal...</p>
+}
+
+@if (hasChannel()) {
+  <div class="row channel">
+    <div class="col-md-2">
+      <img
+        [src]="channel()!.thumbnails.high.url"
+        [alt]="channel()!.title"
+        class="img-circle"
+      />
+    </div>
+
+    <div class="col">
+      <h3>{{ channel()!.title }}</h3>
+
+      <p>
+        {{ channel()!.description }}
+      </p>
+
+      <p>
+        <small class="text-muted">
+          {{ channel()!.publishedAt | dateHour }}
+        </small>
+      </p>
+    </div>
+  </div>
+}

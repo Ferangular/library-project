@@ -8,6 +8,13 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient()
+    provideHttpClient(),
+    {
+      provide: 'config',
+      useValue: {
+        apiKey: 'YOUR_YOUTUBE_API_KEY_HERE',
+        showLog: true
+      }
+    }
   ]
 };

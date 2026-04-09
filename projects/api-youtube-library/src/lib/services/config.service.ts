@@ -1,5 +1,6 @@
-import { Config } from './../interfaces/config';
+
 import { Injectable, Inject } from '@angular/core';
+import { Config } from '../models/config';
 
 @Injectable({
   providedIn: 'root'

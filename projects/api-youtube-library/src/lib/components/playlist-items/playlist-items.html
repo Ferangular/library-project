@@ -1,0 +1,65 @@
+@if (error()) {
+  <div class="alert alert-danger" role="alert">
+    {{ error() }}
+  </div>
+}
+
+@if (hasVideos()) {
+  <div class="row videos">
+    @for (video of videos(); track video.snippet.resourceId.videoId; let i = $index) {
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <img
+            [src]="video.snippet.thumbnails.high.url"
+            [alt]="video.snippet.title"
+            class="card-img-top"
+          />
+
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">
+              {{ video.snippet.title }}
+            </h5>
+
+            <p class="card-text">
+              {{ video.snippet.description | shortDescription: 100 }}
+            </p>
+
+            <p class="card-text">
+              <small class="text-muted">
+                {{ video.snippet.publishedAt | dateHour }}
+              </small>
+            </p>
+
+            <button
+              type="button"
+              class="btn btn-info mt-auto"
+              (click)="showVideo(video)"
+            >
+              Ver video
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+} @else if (!isLoading()) {
+  <p class="text-muted">No hay vídeos disponibles.</p>
+}
+
+@if (isLoading()) {
+  <p class="text-muted">Cargando vídeos...</p>
+}
+
+@if (hasVideos() && !noMoreVideos()) {
+  <button
+    type="button"
+    class="btn btn-outline-info morevideos"
+    (click)="loadMore()"
+  >
+    Cargar más videos
+  </button>
+}
+
+@if (noMoreVideos()) {
+  <p class="text-muted mt-3">No hay más vídeos en este playlist.</p>
+}
