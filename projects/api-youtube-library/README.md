@@ -1,6 +1,69 @@
-# ApiYoutubeLibrary
+# ApiYouTubeLibrary
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
+Una librería Angular para integrar la API de YouTube Data v3 con componentes reutilizables para video player, modales y más.
+
+## Configuración de API Key
+
+### Paso 1: Obtener tu API Key de YouTube
+
+Para usar esta librería necesitas una API key de YouTube Data API v3. Sigue estos pasos:
+
+1. **Ve a Google Cloud Console**:
+   - [https://console.cloud.google.com/](https://console.cloud.google.com/)
+   - [Acceso directo a APIs](https://console.cloud.google.com/apis/api/youtube.googleapis.com/metrics?hl=es-419&project=curso-crear-libreria&supportedpurview=project)
+   - Inicia sesión con tu cuenta de Google
+
+2. **Crea un nuevo proyecto** (o selecciona uno existente):
+   - Haz click en el selector de proyectos en la parte superior
+   - Click en "NUEVO PROYECTO"
+   - Dale un nombre y haz click en "CREAR"
+
+3. **Habilita YouTube Data API v3**:
+   - En el menú izquierdo, ve a **"APIs y servicios"** > **"Biblioteca"**
+   - Busca **"YouTube Data API v3"**
+   - Haz click en ella y luego en **"Habilitar"**
+
+4. **Crea credenciales**:
+   - En el menú izquierdo, ve a **"APIs y servicios"** > **"Credenciales"**
+   - Haz click en **"+ CREAR CREDENCIALES"**
+   - Selecciona **"Clave de API"**
+   - Copia la clave generada
+
+5. **Configura la clave** (opcional pero recomendado):
+   - Haz click en la clave recién creada
+   - En "Restricciones de API", selecciona "YouTube Data API v3"
+   - En "Restricciones de aplicación", selecciona "Referencias HTTP" y añade tu dominio
+
+### Paso 2: Configurar en tu proyecto
+
+1. **Crea el archivo de entorno**:
+   ```bash
+   # Copia el template
+   cp src/environments/.env.example .env
+   ```
+
+2. **Edita el archivo `.env`**:
+   ```env
+   YOUTUBE_API_KEY=tu_api_key_aqui
+   ```
+
+3. **Asegúrate que `.env` esté en `.gitignore`**:
+   ```gitignore
+   # Environment files
+   .env
+   .env.local
+   .env.production
+   ```
+
+### Paso 3: Verificar la configuración
+
+La API key se cargará automáticamente desde las variables de entorno en `app.config.ts`. Puedes verificar que funciona revisando la consola del navegador (si `showLog` está en `true`).
+
+## Enlaces útiles
+
+- [Google Cloud Console](https://console.cloud.google.com/)
+- [YouTube Data API v3 Documentation](https://developers.google.com/youtube/v3)
+- [Panel de APIs](https://console.cloud.google.com/apis/api/youtube.googleapis.com/metrics)
 
 ## Code scaffolding
 

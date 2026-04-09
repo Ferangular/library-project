@@ -3,6 +3,7 @@ import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 
 import { routes } from './app.routes';
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,7 +13,7 @@ export const appConfig: ApplicationConfig = {
     {
       provide: 'config',
       useValue: {
-        apiKey: 'YOUR_YOUTUBE_API_KEY_HERE',
+        apiKey: environment.youtubeApiKey,
         showLog: true
       }
     }
