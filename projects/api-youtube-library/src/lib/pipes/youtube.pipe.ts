@@ -1,15 +1,20 @@
 import { VIDEOEMBED } from './../constants/urls';
-import { DomSecurePipe } from './dom-secure.pipe';
-import { DomSanitizer } from '@angular/platform-browser';
-import { Pipe, PipeTransform } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Pipe, inject } from '@angular/core';
 
 @Pipe({
-  name: 'youtube'
+  name: 'youtube',
+  standalone: true
 })
-export class YoutubePipe implements PipeTransform {
-  constructor(private domSanitizer: DomSanitizer) {}
-  transform(value: string): any {
-    return new DomSecurePipe(this.domSanitizer).transform(value, VIDEOEMBED);
-  }
+export class YoutubePipe {
+  private readonly domSanitizer = inject(DomSanitizer);
 
+  transform(value: string): SafeResourceUrl {
+    if (!value) {
+      return this.domSanitizer.bypassSecurityTrustResourceUrl('');
+    }
+
+    const videoUrl = `${VIDEOEMBED}${value}`;
+    return this.domSanitizer.bypassSecurityTrustResourceUrl(videoUrl);
+  }
 }
