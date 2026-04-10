@@ -175,7 +175,7 @@ export class MyComponent {
   }
 }
 ```
-
+![img.png](img.png)
 ## 🎨 Personalización
 
 ### Temas
